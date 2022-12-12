@@ -6,13 +6,15 @@ public class TeleportationScripts : MonoBehaviour
 {
     [SerializeField] GameObject HomeBaseTeleportation;
     
-
+    public AudioClip Scream, Splat, Horay;
     Vector3 HomeBaseLocation;
+    public AudioSource SoundSource;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        
         HomeBaseLocation = HomeBaseTeleportation.transform.position;
     }
 
@@ -28,9 +30,23 @@ public class TeleportationScripts : MonoBehaviour
             TeleportPlayer(HomeBaseLocation);
         }
         //if y is above a certain limit (26) and z is above a certain limit (29)= made it to other side trigger something
+
         //if Y is below a certain limit( 10 ) teleport to home base
-         if( transform.position.y <= 10f)
-            TeleportPlayer(HomeBaseLocation);
+        if(transform.position.y <= 26f)
+        {
+            SoundSource.PlayOneShot(Scream, 1f);
+        }
+        if(transform.position.y <4f)
+        {
+            SoundSource.PlayOneShot(Splat,1f);
+           // yield return new WaitForSeconds(3);
+        }
+         if( transform.position.y <= 2.3f)
+         {
+            //player falling
+             TeleportPlayer(HomeBaseLocation);
+         }
+           
     }
 
     void TeleportPlayer(Vector3 tpLocation)
@@ -38,4 +54,6 @@ public class TeleportationScripts : MonoBehaviour
         gameObject.transform.position = tpLocation;
         Debug.Log(tpLocation + " Teleport reached");
     }
+
+   
 }
